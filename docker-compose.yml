@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+    app:
+        build: Dockerfile
+        container_name: tg_bot_vpn
+        restart: always
+        env_file:
+            - .env.production
+        volumes:
+            - sqlite-data:/app/data
+        command: ["./server"]
+volumes:
+    sqlite-data:
