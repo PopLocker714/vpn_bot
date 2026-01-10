@@ -11,8 +11,12 @@ import preCheckout from "./api/preCheckout";
 import successfulPayment from "./api/successfulPayment";
 import { startCacheGC } from "./cron";
 import webhookRemnawave from "./api/webhookRemnawave";
+import executeMethod from "@utils/executeMethod";
 
 console.log("Reload last", Date.now());
+
+const url = `https://${Bun.env.HOST}`
+await executeMethod('set_webhook', { url, allowed_updates: ['message', 'callback_query', 'pre_checkout_query',] })
 
 startCacheGC()
 
@@ -89,5 +93,4 @@ const server = serve({
     },
 });
 
-console.log(server.url)
-console.log(server.port)
+console.log(server.url.href)
