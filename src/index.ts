@@ -14,6 +14,7 @@ import webhookRemnawave from "./api/webhookRemnawave";
 import executeMethod from "@utils/executeMethod";
 
 console.log("Reload last", Date.now());
+console.log(Bun.env)
 
 const url = `https://${Bun.env.HOST}`
 await executeMethod('set_webhook', { url, allowed_updates: ['message', 'callback_query', 'pre_checkout_query',] })

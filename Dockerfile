@@ -5,7 +5,7 @@ COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile --production
 
 COPY . .
-RUN bun build --compile --minify \
+RUN bun build --compile --minify --sourcemap \
     --target=bun \
     --outfile=server \
     ./src/index.ts
