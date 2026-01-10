@@ -5,8 +5,8 @@ services:
         build: .
         container_name: tg_bot_vpn
         restart: always
-        # env_file:
-        # - .env.production
+        ports:
+            - "0.0.0.0:4004:${APP_PORT:-4004}"
         volumes:
             - sqlite-data:/app/data
         command: ["./server"]
