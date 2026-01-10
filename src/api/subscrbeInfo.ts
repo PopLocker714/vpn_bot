@@ -11,7 +11,7 @@ export default async ({ update, data }: IParams) => {
     const chat_id = 'chat' in update ? update.chat.id : update.from.id
     const user = await rw.user.getByTelegramId(chat_id, true)
     if (!user || 'err' in user) return
-    const isFreeAvalabel = user.tag === 'FREE_USED'
+    const isFreeAvalabel = !(user.tag === 'FREE_USED')
     const sendMessageConfig: Parameters<Api['send_message']>[0] = {
         chat_id,
         text: `
@@ -21,8 +21,8 @@ export default async ({ update, data }: IParams) => {
 
 👍 Пользователи говорят, что готовы платить за эту скорость и удобство даже больше
 ✅ Проверь, насколько понравится тебе
-${isFreeAvalabel && `
-🎁 Всем новым пользователям бесплатный пробный период\\!`}
+${isFreeAvalabel ? `
+🎁 Всем новым пользователям бесплатный пробный период\\!`: ""}
 `,
         parse_mode: 'MarkdownV2',
         reply_markup: {
