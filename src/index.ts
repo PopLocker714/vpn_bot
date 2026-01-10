@@ -28,8 +28,8 @@ const runCmd = (cmd: string, update: ExtractedUpdate<'message' | 'callback_query
 }
 
 const server = serve({
-    hostname: "0.0.0.0",
-    port: Bun.env.PORT || 3000,
+    hostname: Bun.env.HOSTNAME,
+    port: Bun.env.PORT || 4004,
     development: isDev,
     routes: {
         "/webhook/remnawave": webhookRemnawave,
@@ -88,3 +88,6 @@ const server = serve({
         return new Response("Not Found", { status: 404 });
     },
 });
+
+console.log(server.url)
+console.log(server.port)

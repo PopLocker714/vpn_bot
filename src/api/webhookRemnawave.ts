@@ -20,7 +20,8 @@ export default async (req: Bun.BunRequest<"/webhook/remnawave">) => {
 
     const event = JSON.parse(rawBody) as TRemnawaveWebhookUserEvent
     if (event.event === 'user.expires_in_72_hours') {
-        if (!event.data.telegramId) return
+        if (!event.data.telegramId) return new Response('Internal error', { status: 500 })
+
         await executeMethod('send_message', {
             chat_id: event.data.telegramId,
             text: `🔔 Успейте продлить подписку, осталось 3 дня\\!
@@ -32,7 +33,7 @@ _\* При покупке дни сумируются_`,
     }
 
     if (event.event === 'user.expires_in_24_hours') {
-        if (!event.data.telegramId) return
+        if (!event.data.telegramId) return new Response('Internal error', { status: 500 })
         await executeMethod('send_message', {
             chat_id: event.data.telegramId,
             text: `🔔 До конца подписки остался один день\\!
