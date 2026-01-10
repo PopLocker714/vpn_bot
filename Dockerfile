@@ -18,9 +18,5 @@ COPY --from=builder /app/node_modules /app/node_modules
 COPY drizzle_sqlite /app/drizzle_sqlite
 COPY drizzle_sqlite_memory /app/drizzle_sqlite_memory
 COPY package.json /app/package.json
-COPY entrypoint.sh /entrypoint.sh
 
-RUN chmod +x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
 CMD ["./server"]
