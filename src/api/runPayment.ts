@@ -3,6 +3,7 @@ import type { ICallbackDataSubscribe, ICTX } from "@/types"
 import { MESSAGE_EFFECTS } from "@effect-ak/tg-bot-client"
 import { rw } from "@lib/remnawave"
 import executeMethod from "@utils/executeMethod"
+import getNewExpireAt from "@utils/getNewExpireAt"
 
 interface IParams extends ICTX<'callback_query'> {
     data: ICallbackDataSubscribe
@@ -40,12 +41,9 @@ export default async ({ update, data }: IParams) => {
         const squds = await rw.squads.getSquads()
         if (!('response' in squds)) return
         const squadsUuids = squds.response.internalSquads.map(squad => squad.uuid);
-        const extraMs = 1000 * 60 * 60 * 24 * data.days;
 
         const newExpireAt =
-            user.expireAt && user.expireAt > new Date()
-                ? new Date(user.expireAt.getTime() + extraMs)
-                : new Date(Date.now() + extraMs);
+            getNewExpireAt(user.expireAt, data.days)
 
         const resUpdatedUser = await rw.user.update({
             uuid: user.uuid,
@@ -61,21 +59,22 @@ PAYLOAD: ${JSON.stringify(data, null, 2)}
 `
         })
 
-
         if ('uuid' in resUpdatedUser) {
             await executeMethod('send_message', {
                 chat_id: update.from.id,
                 text: `
-Пробный период акитвирован на ${data.days} дней\\!
-Ниже будет ссылка на инструкцию как подключиться к VPN
-Если не получается обратитесь в поддержку
-Приятного пользования\\!
+🎉 Пробный период акитвирован на ${data.days} дней\\!
+Ниже будет ссылка на инструкцию для подключения
+Если не получается подключться обратитесь в поддержку
+Приятного пользования 😉
                 `,
                 parse_mode: 'MarkdownV2',
                 message_effect_id: MESSAGE_EFFECTS["🎉"],
                 reply_markup: {
                     inline_keyboard: [
-                        [{ text: "Подключиться", url: resUpdatedUser.subscriptionUrl }],
+                        [{
+                            text: "Подключиться", url: `${Bun.env.REMNAWAVE_WEB}/${resUpdatedUser.shortUuid}`
+                        }],
                         [backButtonMenu]
                     ],
                 },

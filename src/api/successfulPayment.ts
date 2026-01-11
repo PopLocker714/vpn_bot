@@ -5,6 +5,7 @@ import executeMethod from "@utils/executeMethod";
 import { MESSAGE_EFFECTS } from "@effect-ak/tg-bot-client";
 import sqldb from "@/db/sqlite";
 import { $Transactions } from "@/db/sqlite/schemas/transaction.schema";
+import getNewExpireAt from "@utils/getNewExpireAt";
 
 interface IParams extends ICTX<'message'> { }
 
@@ -18,12 +19,7 @@ export default async ({ update }: IParams) => {
     if ('response' in squds && user && !("err" in user)) {
         const squadsUuids = squds.response.internalSquads.map(squad => squad.uuid);
 
-        const extraMs = 1000 * 60 * 60 * 24 * payload.days;
-
-        const newExpireAt =
-            user.expireAt && user.expireAt > new Date()
-                ? new Date(user.expireAt.getTime() + extraMs)
-                : new Date(Date.now() + extraMs);
+        const newExpireAt = getNewExpireAt(user.expireAt, payload.days)
 
         const resUpdatedUser = await rw.user.update({
             uuid: user.uuid,
@@ -70,16 +66,18 @@ PAYLOAD: ${JSON.stringify(payload, null, 2)}
             await executeMethod('send_message', {
                 chat_id: update.chat.id,
                 text: `
-Оплата прошла успешно\\!
-Ниже будет ссылка на инструкцию как подключиться к VPN
-Если не получается обратитесь в поддержку
-Приятного пользования\\!
+🎉 Оплата прошла успешно\\!
+Ниже будет ссылка на инструкцию для подключения
+Если не получается подключться обратитесь в поддержку
+Приятного пользования 😉
                 `,
                 parse_mode: 'MarkdownV2',
                 message_effect_id: MESSAGE_EFFECTS["🎉"],
                 reply_markup: {
                     inline_keyboard: [
-                        [{ text: "Подключиться", url: resUpdatedUser.subscriptionUrl }],
+                        [{
+                            text: "Подключиться", url: `${Bun.env.REMNAWAVE_WEB}/${resUpdatedUser.shortUuid}`
+                        }],
                         [backButtonMenu]
                     ],
                 },

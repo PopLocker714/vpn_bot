@@ -12,6 +12,7 @@ export default async ({ update, data }: IParams) => {
     const user = await rw.user.getByTelegramId(chat_id, true)
     if (!user || 'err' in user) return
     const isFreeAvalabel = !(user.tag === 'FREE_USED')
+
     const sendMessageConfig: Parameters<Api['send_message']>[0] = {
         chat_id,
         text: `
@@ -19,10 +20,10 @@ export default async ({ update, data }: IParams) => {
 2️⃣ Внеси платеж
 3️⃣ И получи ссылку с простой инструкцией😉
 
-👍 Пользователи говорят, что готовы платить за эту скорость и удобство даже больше
-✅ Проверь, насколько понравится тебе
-${isFreeAvalabel ? `
-🎁 Всем новым пользователям бесплатный пробный период\\!`: ""}
+⏰ Если подписка активна, оплаченное время добавится к текущей подписке\\.
+Посмотреть оставшееся время подписки можно во вкладке 🔐 Моя подписка
+
+${isFreeAvalabel ? `🎁 Всем новым пользователям бесплатный пробный период\\!` : ""}
 `,
         parse_mode: 'MarkdownV2',
         reply_markup: {
@@ -32,8 +33,8 @@ ${isFreeAvalabel ? `
 
     if (update.type === 'callback_query') {
         const cb = update as ExtractedUpdate<'callback_query'>
-        executeMethod('answer_callback_query', { callback_query_id: cb.id, })
         await executeMethod('send_message', sendMessageConfig)
+        await executeMethod('answer_callback_query', { callback_query_id: cb.id, })
         return
     }
 

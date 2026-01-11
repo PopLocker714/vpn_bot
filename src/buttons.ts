@@ -5,6 +5,7 @@ export const buttonsPlan: InlineKeyboardButton[][] = [
     [
         {
             text: '💰 Подписка на месяц (250₽)',
+            pay: true,
             callback_data: JSON.stringify({
                 type: 'subscribe',
                 price: 25000,
@@ -24,27 +25,27 @@ export const buttonsPlan: InlineKeyboardButton[][] = [
     ],
     [
         {
-            text: '💰💰💰 Подписка на год (1500₽)',
+            text: '💰💰💰 Подписка на пол года (1500₽)',
             callback_data: JSON.stringify({
                 type: 'subscribe',
-                price: 75000,
-                days: 90,
+                price: 150000,
+                days: 180,
             } as ICallbackDataSubscribe),
         },
     ],
 ];
 
 export const freeButtonPlan: InlineKeyboardButton = {
-    text: '🤩 Пробный период 7 дней',
+    text: '🎁 Пробный период 7 дней',
     callback_data: JSON.stringify({
         type: 'subscribe',
         price: 0,
-        days: 3,
+        days: 7,
     } as ICallbackDataSubscribe),
 };
 
 export const backButtonMenu: InlineKeyboardButton = {
-    text: '🔙 меню',
+    text: '☰ меню',
     callback_data: JSON.stringify({
         type: "cmd",
         command: '/start'
@@ -52,38 +53,35 @@ export const backButtonMenu: InlineKeyboardButton = {
 };
 
 export const connectButton: InlineKeyboardButton = {
-    text: '👉 Подключиться к VPN',
+    text: '👉 Подключиться/Продлить',
     callback_data: JSON.stringify({
         type: "cmd",
         command: '/subscribe'
     } as ICallbackDataCmd),
 };
 
-const extendSubscriptionButton: InlineKeyboardButton = {
-    text: '🔂 Продлить подписку',
-    callback_data: JSON.stringify({
-        type: "cmd",
-        command: '/subscribe'
-    } as ICallbackDataCmd),
-};
 
-const keysButton: InlineKeyboardButton = {
-    text: '🔑 Моя подписка',
+const mySubscribe: InlineKeyboardButton = {
+    text: '🔐 Моя подписка',
     callback_data: JSON.stringify({
+        command: '/subscription',
+        type: 'cmd'
     } as ICallbackDataCmd),
 };
 
 const helpButton: InlineKeyboardButton = {
     text: '🆘 Помощь',
-    callback_data: JSON.stringify({
-
-    } as ICallbackDataCmd),
+    url: 'https://t.me/poploker'
+    // callback_data: JSON.stringify({
+    //     command: '/help',
+    //     type: 'cmd'
+    // } as ICallbackDataCmd),
 };
 
 export const startButtons: InlineKeyboardButton[][] = [
     [connectButton],
-    [extendSubscriptionButton],
-    [keysButton, helpButton],
+    // [extendSubscriptionButton],
+    [mySubscribe, helpButton],
 ];
 
 export const subscriptionButtons = [

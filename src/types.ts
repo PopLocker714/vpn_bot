@@ -13,7 +13,7 @@ export interface ICallbackDataSubscribe {
 
 export interface ICallbackDataCmd {
     type: 'cmd'
-    command: string
+    command: '/start' | '/subscribe' | '/subscription' | '/help'
 }
 
 export type ICallbackTypes = ICallbackDataCmd | ICallbackDataSubscribe

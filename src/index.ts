@@ -4,14 +4,15 @@ import type { Update } from '@effect-ak/tg-bot-api';
 import { extractUpdate, type ExtractedUpdate, } from '@effect-ak/tg-bot';
 import { extractCommand } from "./utils/extractCommand";
 import startCmd from "./api/start";
-import subscrbeInfo from "./api/subscrbeInfo";
-import type { ICallbackTypes } from "./types";
+import subscribe from "./api/subscribe";
+import type { ICallbackDataCmd, ICallbackTypes } from "./types";
 import runPayment from "./api/runPayment";
 import preCheckout from "./api/preCheckout";
 import successfulPayment from "./api/successfulPayment";
 import { startCacheGC } from "./cron";
 import webhookRemnawave from "./api/webhookRemnawave";
 import executeMethod from "@utils/executeMethod";
+import subscription from "./api/subscription";
 
 console.log("Reload last", Date.now());
 
@@ -24,14 +25,17 @@ if (Bun.env.SET_BOT_WEBHOOK === 'true') {
 
 startCacheGC()
 
-const runCmd = (cmd: string, update: ExtractedUpdate<'message' | 'callback_query'>) => {
+const runCmd = (cmd: ICallbackDataCmd['command'] | string, update: ExtractedUpdate<'message' | 'callback_query'>) => {
     switch (cmd) {
         case '/start':
             startCmd({ update })
             break;
         case '/subscribe':
-            subscrbeInfo({ update })
+            subscribe({ update })
             break;
+        case '/subscription':
+            subscription({ update })
+            break
     }
 }
 
