@@ -12,6 +12,7 @@ export default async ({ tg_id, username }: { tg_id: number, username: string }) 
             username,
             status: "DISABLED",
             trafficLimitStrategy: "MONTH",
+            trafficLimitBytes: 1000 * 1024 * 1024 * 1024,
             telegramId: tg_id,
             expireAt: new Date(),
         } as CreateUserCommand.Request)
