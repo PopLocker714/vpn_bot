@@ -29,7 +29,7 @@ const startMsgParams: Parameters<Api['send_message']>[0] = {
 
 export default async ({ update }: ICTX<'message' | 'callback_query'>) => {
     const chatId = 'chat' in update ? update.chat.id : update.from.id
-    const username = ('chat' in update ? update.chat.username : update.from.username) || 'user'
+    const username = ('chat' in update ? update.chat.username : update.from.username) || 'user:' + chatId
     const existUser = await rw.user.getByTelegramId(chatId, true)
 
     if (!existUser) {
