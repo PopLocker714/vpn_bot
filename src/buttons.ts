@@ -72,16 +72,20 @@ const mySubscribe: InlineKeyboardButton = {
 const helpButton: InlineKeyboardButton = {
     text: '🆘 Помощь',
     url: 'https://t.me/poploker'
-    // callback_data: JSON.stringify({
-    //     command: '/help',
-    //     type: 'cmd'
-    // } as ICallbackDataCmd),
+};
+
+const referalButton: InlineKeyboardButton = {
+    text: '⭐ Реферальная програма',
+    callback_data: JSON.stringify({
+        command: '/referal',
+        type: 'cmd'
+    } as ICallbackDataCmd),
 };
 
 export const startButtons: InlineKeyboardButton[][] = [
     [connectButton],
-    // [extendSubscriptionButton],
     [mySubscribe, helpButton],
+    // [referalButton],
 ];
 
 export const subscriptionButtons = [

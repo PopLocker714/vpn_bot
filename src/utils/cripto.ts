@@ -3,30 +3,21 @@ export interface WebhookHeaders {
     "x-remnawave-timestamp": string
 }
 
-// export function validateWebhook(
-//     body: unknown,
-//     signatureHeader?: string | null,
-//     webhookSecret?: string,
-// ): boolean {
-//     if (!webhookSecret) return false
-//     if (!signatureHeader) return false
-//     const hasher = new Bun.CryptoHasher("sha256", webhookSecret)
-//     hasher.update(JSON.stringify(body))
-//     const signature = hasher.digest("hex")
-//     return signature === signatureHeader
-// }
+export async function validateWebhookHcmc(
+    req: Request,
+    secret?: string
+): Promise<boolean> {
+    const signatureHeader = req.headers.get("x-remnawave-signature") ?? ""
+    if (!signatureHeader || !secret) return false
 
-export function validateWebhook(
-    rawBody: string,
-    signature: string,
-    secret: string,
-): boolean {
-    if (!secret || !signature) return false
+    const payload = await req.json()
 
-    const hasher = new Bun.CryptoHasher("sha256", secret)
-    hasher.update(rawBody)
+    const hasher = new Bun.CryptoHasher("sha256", secret);
+    hasher.update(JSON.stringify(payload));
+    const signature = hasher.digest("hex")
 
-    const expected = hasher.digest("hex")
+    console.log('v2', signature);
+    console.log('v2', signatureHeader);
 
-    return expected === signature
+    return signature === signatureHeader
 }

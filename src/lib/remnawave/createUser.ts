@@ -5,6 +5,7 @@ import { setUserCache } from "@utils/cache/user.cache"
 export default async ({ tg_id, username }: { tg_id: number, username: string }) => {
     const url = CreateUserCommand.url
     const method = CreateUserCommand.endpointDetails.REQUEST_METHOD
+    console.log(username)
 
     const res = await getRemnawaveInstance<CreateUserCommand.Response>(url, {
         method,
@@ -23,6 +24,7 @@ export default async ({ tg_id, username }: { tg_id: number, username: string }) 
         await setUserCache(user).then(data => { console.log("cache user", data) })
         return user
     } else {
+        console.log('register ERROR', res)
         return res
     }
 }

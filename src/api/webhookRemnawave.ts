@@ -1,17 +1,14 @@
-import { validateWebhook } from "@utils/cripto";
+import { validateWebhookHcmc } from "@utils/cripto";
 import type { TRemnawaveWebhookUserEvent, RemnawaveWebhookUserEvents } from '@remnawave/backend-contract';
 import executeMethod from "@utils/executeMethod";
 import { backButtonMenu, buttonsPlan } from "@/buttons";
 
 export default async (req: Bun.BunRequest<"/webhook/remnawave">) => {
-    const signature = req.headers.get("x-remnawave-signature") ?? ""
-    const rawBody = await req.text()
+    const secret = Bun.env.WEBHOOK_SECRET_HEADER
+    const clone = req.clone()
+    const isValid = await validateWebhookHcmc(clone, secret)
 
-    const isValid = validateWebhook(
-        rawBody,
-        signature,
-        process.env.WEBHOOK_SECRET_HEADER!,
-    )
+    const rawBody = await req.text()
 
     if (!isValid) {
         console.log("Invalid signature")

@@ -4,6 +4,7 @@ import type { ICTX } from "@/types";
 import executeMethod from "@utils/executeMethod";
 import type { Api } from "@effect-ak/tg-bot-api";
 import { rw } from "@lib/remnawave";
+import { parseUsername } from "@utils/parseUsername";
 
 const renderText = (userName: string) => `
 Привет *${userName}\\!*
@@ -29,7 +30,8 @@ const startMsgParams: Parameters<Api['send_message']>[0] = {
 
 export default async ({ update }: ICTX<'message' | 'callback_query'>) => {
     const chatId = 'chat' in update ? update.chat.id : update.from.id
-    const username = ('chat' in update ? update.chat.username : update.from.username) || 'user:' + chatId
+    const username = parseUsername(('chat' in update ? update.chat.username : update.from.username)
+        || ('chat' in update ? update.chat.first_name : update.from.first_name) + '_' + chatId)
     const existUser = await rw.user.getByTelegramId(chatId, true)
 
     if (!existUser) {
@@ -48,6 +50,9 @@ export default async ({ update }: ICTX<'message' | 'callback_query'>) => {
     }
 
     const msg = update as ExtractedUpdate<'message'>
+
+    // console.log("ВНИМАНИЕ ОБНАРУЖЕН РЕФ КОД!!!", msg.text?.replace("/start=", '')) // refcode
+
     await executeMethod('send_message', {
         ...startMsgParams,
         chat_id: msg.chat.id,

@@ -5,6 +5,7 @@ import { extractUpdate, type ExtractedUpdate, } from '@effect-ak/tg-bot';
 import { extractCommand } from "./utils/extractCommand";
 import startCmd from "./api/start";
 import subscribe from "./api/subscribe";
+import referal from "./api/referal";
 import type { ICallbackDataCmd, ICallbackTypes } from "./types";
 import runPayment from "./api/runPayment";
 import preCheckout from "./api/preCheckout";
@@ -35,6 +36,9 @@ const runCmd = (cmd: ICallbackDataCmd['command'] | string, update: ExtractedUpda
             break;
         case '/subscription':
             subscription({ update })
+            break
+        case '/referal':
+            referal({ update })
             break
     }
 }
