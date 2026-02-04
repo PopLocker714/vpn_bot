@@ -6,6 +6,7 @@ export const $Users_c = sqliteTable("users", {
     id: int().primaryKey().notNull(),
     data: text({ mode: "json" }).notNull().$type<CreateUserCommand.Response['response']>(),
     tg_id: int(),
+    uuid: text({ mode: "text", length: 36 }),
     exp: int({ mode: 'timestamp' }).notNull()
         .$defaultFn(() =>
             sql`(strftime('%s','now') + 3600)`)

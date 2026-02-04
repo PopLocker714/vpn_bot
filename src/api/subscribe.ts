@@ -3,13 +3,13 @@ import { buttonsPlan, subscriptionButtons } from "@/buttons";
 import type { ICTX } from "@/types";
 import executeMethod from "@utils/executeMethod";
 import type { Api } from "@effect-ak/tg-bot-api";
-import { rw } from "@lib/remnawave";
+import { remnawaveService } from "@lib/remnawave";
 
 interface IParams extends ICTX<'callback_query' | 'message'> { }
 
 export default async ({ update, data }: IParams) => {
     const chat_id = 'chat' in update ? update.chat.id : update.from.id
-    const user = await rw.user.getByTelegramId(chat_id, true)
+    const user = await remnawaveService.user.getByTelegramId(chat_id, true)
     if (!user || 'err' in user) return
     const isFreeAvalabel = !(user.tag === 'FREE_USED')
 

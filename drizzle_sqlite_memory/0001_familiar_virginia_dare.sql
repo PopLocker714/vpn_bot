@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `uuid` text(36);

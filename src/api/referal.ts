@@ -1,13 +1,12 @@
 import type { ExtractedUpdate } from "@effect-ak/tg-bot";
 import type { ICTX } from "@/types";
 import executeMethod from "@utils/executeMethod";
-import { rw } from "@lib/remnawave";
-import { generateRefCode } from "@lib/ref";
+import { remnawaveService } from "@lib/remnawave";
+import { referalService } from "@lib/referal.methods";
 
 export default async ({ update }: ICTX<'message' | 'callback_query'>) => {
     const chat_id = 'chat' in update ? update.chat.id : update.from.id
-    const existUser = await rw.user.getByTelegramId(chat_id, true)
-    console.log(existUser)
+    const existUser = await remnawaveService.user.getByTelegramId(chat_id, true)
 
     if (!existUser) {
         await executeMethod('send_message', {
@@ -30,7 +29,7 @@ export default async ({ update }: ICTX<'message' | 'callback_query'>) => {
         executeMethod('answer_callback_query', { callback_query_id: cb.id, })
     }
 
-    const link = `https://t.me/${Bun.env.BOT_NAME}?start=${generateRefCode(existUser.uuid)}`
+    const link = `https://t.me/${Bun.env.BOT_NAME}?start=${referalService.generateRefCode(existUser.uuid)}`
 
     await executeMethod('send_message', {
         chat_id,

@@ -1,7 +1,7 @@
 import { backButtonMenu } from "@/buttons"
 import type { ICallbackDataSubscribe, ICTX } from "@/types"
 import { MESSAGE_EFFECTS } from "@effect-ak/tg-bot-client"
-import { rw } from "@lib/remnawave"
+import { remnawaveService } from "@lib/remnawave"
 import executeMethod from "@utils/executeMethod"
 import getNewExpireAt from "@utils/getNewExpireAt"
 
@@ -21,7 +21,7 @@ export default async ({ update, data }: IParams) => {
 
     executeMethod('answer_callback_query', { callback_query_id: update.id })
     if (data.price === 0) {
-        const user = await rw.user.getByTelegramId(update.from.id)
+        const user = await remnawaveService.user.getByTelegramId(update.from.id)
         if (!user) return
         if ('err' in user) return
 
@@ -38,14 +38,14 @@ export default async ({ update, data }: IParams) => {
             return
         }
 
-        const squds = await rw.squads.getSquads()
+        const squds = await remnawaveService.squads.getSquads()
         if (!('response' in squds)) return
         const squadsUuids = squds.response.internalSquads.map(squad => squad.uuid);
 
         const newExpireAt =
             getNewExpireAt(user.expireAt, data.days)
 
-        const resUpdatedUser = await rw.user.update({
+        const resUpdatedUser = await remnawaveService.user.update({
             uuid: user.uuid,
             activeInternalSquads: squadsUuids,
             status: "ACTIVE",

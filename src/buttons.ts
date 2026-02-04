@@ -85,7 +85,7 @@ const referalButton: InlineKeyboardButton = {
 export const startButtons: InlineKeyboardButton[][] = [
     [connectButton],
     [mySubscribe, helpButton],
-    // [referalButton],
+    [referalButton],
 ];
 
 export const subscriptionButtons = [

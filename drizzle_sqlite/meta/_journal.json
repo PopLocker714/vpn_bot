@@ -8,6 +8,13 @@
       "when": 1767695168869,
       "tag": "0000_lucky_sentinels",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1770208004550,
+      "tag": "0001_small_stick",
+      "breakpoints": true
     }
   ]
 }

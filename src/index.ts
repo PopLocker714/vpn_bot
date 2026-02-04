@@ -14,6 +14,7 @@ import { startCacheGC } from "./cron";
 import webhookRemnawave from "./api/webhookRemnawave";
 import executeMethod from "@utils/executeMethod";
 import subscription from "./api/subscription";
+import { migrationSeed } from "./db/sqlite/migrations/migrationSeed";
 
 console.log("Reload last", Date.now());
 
@@ -25,6 +26,7 @@ if (Bun.env.SET_BOT_WEBHOOK === 'true') {
 }
 
 startCacheGC()
+await migrationSeed()
 
 const runCmd = (cmd: ICallbackDataCmd['command'] | string, update: ExtractedUpdate<'message' | 'callback_query'>) => {
     switch (cmd) {

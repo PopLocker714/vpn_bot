@@ -14,7 +14,8 @@
         "setwh": "bun run scripts/setWebhook.ts",
         "sqlite-memory:generate": "drizzle-kit generate --config=./src/db/sqliteMemory/drizzle.config.ts",
         "sqlite:generate": "drizzle-kit generate --config=./src/db/sqlite/drizzle.config.ts",
-        "sqlite:push": "drizzle-kit push --config=./src/db/sqlite/drizzle.config.ts"
+        "sqlite:push": "drizzle-kit push --config=./src/db/sqlite/drizzle.config.ts",
+        "studio": "bun run drizzle-kit studio --config=./src/db/sqlite/drizzle.config.ts"
     },
     "devDependencies": {
         "@types/bun": "latest",

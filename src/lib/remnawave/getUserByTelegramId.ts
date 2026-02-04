@@ -14,7 +14,7 @@ export default async (tg_id: number, getCache: boolean = false) => {
 
     if ('response' in res) {
         const user = res.response.at(0)
-        if (user) await setUserCache(user).then(data => { console.log("cache user", data) })
+        if (user) await setUserCache(user).then(data => { console.info("[info] user cached", data) })
         return user
     } else {
         return res
