@@ -6,15 +6,15 @@ import type { Api } from "@effect-ak/tg-bot-api";
 import { remnawaveService } from "@lib/remnawave";
 import { mdv2 } from "@utils/telegramMarkdown";
 
-interface IParams extends ICTX<'callback_query' | 'message'> { }
+interface IParams extends ICTX<"callback_query" | "message"> {}
 
 export default async ({ update, data }: IParams) => {
-    const chat_id = 'chat' in update ? update.chat.id : update.from.id
-    const user = await remnawaveService.user.getByTelegramId(chat_id, true)
-    if (!user || 'err' in user) return
-    const isFreeAvalabel = !(user.tag === 'FREE_USED')
+    const chat_id = "chat" in update ? update.chat.id : update.from.id;
+    const user = await remnawaveService.user.getByTelegramId(chat_id, true);
+    if (!user || "err" in user) return;
+    const isFreeAvalabel = !(user.tag === "FREE_USED");
 
-    const sendMessageConfig: Parameters<Api['send_message']>[0] = {
+    const sendMessageConfig: Parameters<Api["send_message"]>[0] = {
         chat_id,
         text: mdv2`
 1️⃣ Выбери необходимый тариф ниже👇
@@ -26,18 +26,20 @@ export default async ({ update, data }: IParams) => {
 
 ${isFreeAvalabel ? "🎁 Всем новым пользователям бесплатный пробный период!" : ""}
 `,
-        parse_mode: 'MarkdownV2',
+        parse_mode: "MarkdownV2",
         reply_markup: {
-            inline_keyboard: isFreeAvalabel ? subscriptionButtons : buttonsPlan
+            inline_keyboard: isFreeAvalabel ? subscriptionButtons : buttonsPlan,
         },
+    };
+
+    if (update.type === "callback_query") {
+        const cb = update as ExtractedUpdate<"callback_query">;
+        await executeMethod("send_message", sendMessageConfig);
+        await executeMethod("answer_callback_query", {
+            callback_query_id: cb.id,
+        });
+        return;
     }
 
-    if (update.type === 'callback_query') {
-        const cb = update as ExtractedUpdate<'callback_query'>
-        await executeMethod('send_message', sendMessageConfig)
-        await executeMethod('answer_callback_query', { callback_query_id: cb.id, })
-        return
-    }
-
-    await executeMethod('send_message', sendMessageConfig)
-}
+    await executeMethod("send_message", sendMessageConfig);
+};

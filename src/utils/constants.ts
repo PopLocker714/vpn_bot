@@ -1,4 +1,4 @@
 import { env } from "bun";
 
 export const isDev = env.NODE_ENV === "development";
-export const WEBHOOK_PATH = '/bot'
+export const WEBHOOK_PATH = "/bot";

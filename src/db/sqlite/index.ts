@@ -11,15 +11,15 @@ export const createDb = () => {
     const db = drizzle({
         client: sqlite,
         schema,
-    })
+    });
 
     migrate(db, {
-        migrationsFolder: './drizzle_sqlite'
-    })
+        migrationsFolder: "./drizzle_sqlite",
+    });
 
     return db;
 };
 
-const sqldb = createDb()
+const sqldb = createDb();
 
-export default sqldb
+export default sqldb;

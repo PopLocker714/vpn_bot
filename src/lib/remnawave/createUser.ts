@@ -1,10 +1,16 @@
-import { CreateUserCommand } from "@remnawave/backend-contract"
-import getRemnawaveInstance from "@utils/getRemnawaveInstance"
-import { setUserCache } from "@utils/cache/user.cache"
+import { CreateUserCommand } from "@remnawave/backend-contract";
+import getRemnawaveInstance from "@utils/getRemnawaveInstance";
+import { setUserCache } from "@utils/cache/user.cache";
 
-export default async ({ tg_id, username }: { tg_id: number, username: string }) => {
-    const url = CreateUserCommand.url
-    const method = CreateUserCommand.endpointDetails.REQUEST_METHOD
+export default async ({
+    tg_id,
+    username,
+}: {
+    tg_id: number;
+    username: string;
+}) => {
+    const url = CreateUserCommand.url;
+    const method = CreateUserCommand.endpointDetails.REQUEST_METHOD;
 
     const res = await getRemnawaveInstance<CreateUserCommand.Response>(url, {
         method,
@@ -15,14 +21,16 @@ export default async ({ tg_id, username }: { tg_id: number, username: string }) 
             trafficLimitBytes: 1000 * 1024 * 1024 * 1024,
             telegramId: tg_id,
             expireAt: new Date(),
-        } as CreateUserCommand.Request)
-    })
+        } as CreateUserCommand.Request),
+    });
 
-    if ('response' in res) {
-        const user = res.response
-        await setUserCache(user).then(data => { console.info("[info] user cached", data) })
-        return user
+    if ("response" in res) {
+        const user = res.response;
+        await setUserCache(user).then((data) => {
+            console.info("[info] user cached", data);
+        });
+        return user;
     } else {
-        return res
+        return res;
     }
-}
+};

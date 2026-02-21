@@ -8,16 +8,16 @@ import getUsers from "./getUsers";
 import updateUser from "./updateUser";
 
 export const remnawaveService = {
-	user: {
-		getByTelegramId: getUserByTelegramId,
-		getByUuid: getUserByUuid,
-		create: createUser,
-		update: updateUser,
-		delete: deleteUser,
-		addDays,
-		getAll: getUsers,
-	},
-	squads: {
-		getSquads,
-	},
+    user: {
+        getByTelegramId: getUserByTelegramId,
+        getByUuid: getUserByUuid,
+        create: createUser,
+        update: updateUser,
+        delete: deleteUser,
+        addDays,
+        getAll: getUsers,
+    },
+    squads: {
+        getSquads,
+    },
 };

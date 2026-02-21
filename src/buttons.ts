@@ -1,33 +1,33 @@
-import { type InlineKeyboardButton } from '@effect-ak/tg-bot-api';
-import type { ICallbackDataCmd, ICallbackDataSubscribe } from '@/types';
+import { type InlineKeyboardButton } from "@effect-ak/tg-bot-api";
+import type { ICallbackDataCmd, ICallbackDataSubscribe } from "@/types";
 
 export const buttonsPlan: InlineKeyboardButton[][] = [
     [
         {
-            text: '💰 Подписка на месяц (250₽)',
+            text: "💰 Подписка на месяц (250₽)",
             pay: true,
             callback_data: JSON.stringify({
-                type: 'subscribe',
+                type: "subscribe",
                 price: 25000,
-                days: 30
+                days: 30,
             } as ICallbackDataSubscribe),
         },
     ],
     [
         {
-            text: '💰💰 Подписка 3 месяца (750₽)',
+            text: "💰💰 Подписка 3 месяца (750₽)",
             callback_data: JSON.stringify({
-                type: 'subscribe',
+                type: "subscribe",
                 price: 75000,
-                days: 90
+                days: 90,
             } as ICallbackDataSubscribe),
         },
     ],
     [
         {
-            text: '💰💰💰 Подписка на пол года (1500₽)',
+            text: "💰💰💰 Подписка на пол года (1500₽)",
             callback_data: JSON.stringify({
-                type: 'subscribe',
+                type: "subscribe",
                 price: 150000,
                 days: 180,
             } as ICallbackDataSubscribe),
@@ -36,49 +36,48 @@ export const buttonsPlan: InlineKeyboardButton[][] = [
 ];
 
 export const freeButtonPlan: InlineKeyboardButton = {
-    text: '🎁 Пробный период 7 дней',
+    text: "🎁 Пробный период 7 дней",
     callback_data: JSON.stringify({
-        type: 'subscribe',
+        type: "subscribe",
         price: 0,
         days: 7,
     } as ICallbackDataSubscribe),
 };
 
 export const backButtonMenu: InlineKeyboardButton = {
-    text: '☰ меню',
+    text: "☰ меню",
     callback_data: JSON.stringify({
         type: "cmd",
-        command: '/start'
+        command: "/start",
     } as ICallbackDataCmd),
 };
 
 export const connectButton: InlineKeyboardButton = {
-    text: '👉 Подключиться/Продлить',
+    text: "👉 Подключиться/Продлить",
     callback_data: JSON.stringify({
         type: "cmd",
-        command: '/subscribe'
+        command: "/subscribe",
     } as ICallbackDataCmd),
 };
 
-
 const mySubscribe: InlineKeyboardButton = {
-    text: '🔐 Моя подписка',
+    text: "🔐 Моя подписка",
     callback_data: JSON.stringify({
-        command: '/subscription',
-        type: 'cmd'
+        command: "/subscription",
+        type: "cmd",
     } as ICallbackDataCmd),
 };
 
 const helpButton: InlineKeyboardButton = {
-    text: '🆘 Помощь',
-    url: 'https://t.me/poploker'
+    text: "🆘 Помощь",
+    url: "https://t.me/poploker",
 };
 
 const referalButton: InlineKeyboardButton = {
-    text: '⭐ Реферальная програма',
+    text: "⭐ Реферальная програма",
     callback_data: JSON.stringify({
-        command: '/referal',
-        type: 'cmd'
+        command: "/referal",
+        type: "cmd",
     } as ICallbackDataCmd),
 };
 
@@ -88,7 +87,4 @@ export const startButtons: InlineKeyboardButton[][] = [
     [referalButton],
 ];
 
-export const subscriptionButtons = [
-    [freeButtonPlan],
-    ...buttonsPlan
-]
+export const subscriptionButtons = [[freeButtonPlan], ...buttonsPlan];

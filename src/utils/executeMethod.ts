@@ -1,6 +1,10 @@
 import type { Api } from "@effect-ak/tg-bot-api";
 import type { BodyInit, HeadersInit } from "bun";
-import { isTgBotApiResponse, snakeToCamel, TgBotClientError } from "@effect-ak/tg-bot-client";
+import {
+    isTgBotApiResponse,
+    snakeToCamel,
+    TgBotClientError,
+} from "@effect-ak/tg-bot-client";
 
 export interface ExitResultSuccess<M extends keyof Api> {
     ok: true;
@@ -21,7 +25,7 @@ interface RequestOptions {
 export default async <M extends keyof Api>(
     method: M,
     input: Parameters<Api[M]>[0] = {} as any,
-    options: RequestOptions = {}
+    options: RequestOptions = {},
 ) => {
     const token = Bun.env.BOT_TOKEN;
     if (!token) throw new Error("❌ BOT_TOKEN не найден в окружении");
@@ -38,14 +42,14 @@ export default async <M extends keyof Api>(
         if (type === "json") {
             headers["Content-Type"] = "application/json; charset=utf-8";
             body = JSON.stringify(input);
-        }
-        else if (type === "urlencoded") {
-            headers["Content-Type"] = "application/x-www-form-urlencoded; charset=utf-8";
+        } else if (type === "urlencoded") {
+            headers["Content-Type"] =
+                "application/x-www-form-urlencoded; charset=utf-8";
             body = new URLSearchParams(input as any).toString();
-        }
-        else if (type === "multipart") {
+        } else if (type === "multipart") {
             const form = new FormData();
-            for (const [k, v] of Object.entries(input)) form.append(k, v as any);
+            for (const [k, v] of Object.entries(input))
+                form.append(k, v as any);
             body = form;
             headers = {};
         }
@@ -73,9 +77,9 @@ export default async <M extends keyof Api>(
         throw error;
     }
 
-    const isResponse = isTgBotApiResponse(data)
+    const isResponse = isTgBotApiResponse(data);
     if (!isResponse) {
-        console.warn("!Wrong tg bot api response")
+        console.warn("!Wrong tg bot api response");
     }
 
     if (!data.ok) {

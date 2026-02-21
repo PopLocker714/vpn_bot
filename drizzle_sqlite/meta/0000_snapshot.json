@@ -1,64 +1,64 @@
 {
-  "version": "6",
-  "dialect": "sqlite",
-  "id": "88ed917d-58fe-4006-8bf5-4c6a1cc9ca7f",
-  "prevId": "00000000-0000-0000-0000-000000000000",
-  "tables": {
-    "transactions": {
-      "name": "transactions",
-      "columns": {
-        "provider_payment_charge_id": {
-          "name": "provider_payment_charge_id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "telegram_payment_charge_id": {
-          "name": "telegram_payment_charge_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text(36)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "data": {
-          "name": "data",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "create_at": {
-          "name": "create_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(unixepoch())"
+    "version": "6",
+    "dialect": "sqlite",
+    "id": "88ed917d-58fe-4006-8bf5-4c6a1cc9ca7f",
+    "prevId": "00000000-0000-0000-0000-000000000000",
+    "tables": {
+        "transactions": {
+            "name": "transactions",
+            "columns": {
+                "provider_payment_charge_id": {
+                    "name": "provider_payment_charge_id",
+                    "type": "text",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "telegram_payment_charge_id": {
+                    "name": "telegram_payment_charge_id",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "type": "text(36)",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "data": {
+                    "name": "data",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "create_at": {
+                    "name": "create_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "(unixepoch())"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
         }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
+    },
+    "views": {},
+    "enums": {},
+    "_meta": {
+        "schemas": {},
+        "tables": {},
+        "columns": {}
+    },
+    "internal": {
+        "indexes": {}
     }
-  },
-  "views": {},
-  "enums": {},
-  "_meta": {
-    "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
-  "internal": {
-    "indexes": {}
-  }
 }
