@@ -5,6 +5,7 @@ import executeMethod from "@utils/executeMethod";
 import type { Api } from "@effect-ak/tg-bot-api";
 import { remnawaveService } from "@lib/remnawave";
 import getExpDate from "@utils/getExpDate";
+import { mdv2 } from "@utils/telegramMarkdown";
 
 interface IParams extends ICTX<'callback_query' | 'message'> { }
 
@@ -16,8 +17,9 @@ export default async ({ update, data }: IParams) => {
 
     const sendMessageConfig: Parameters<Api['send_message']>[0] = {
         chat_id,
-        text: isHaveSubscription ? `
-Ваша подписка активна и закончиться через ${getExpDate(new Date(user.expireAt))}` : `У вас нет активнной подписки`,
+        text: isHaveSubscription
+            ? mdv2`Ваша подписка активна и закончиться через ${getExpDate(new Date(user.expireAt))}`
+            : mdv2`У вас нет активнной подписки`,
         parse_mode: 'MarkdownV2',
         reply_markup: {
             inline_keyboard: [[{

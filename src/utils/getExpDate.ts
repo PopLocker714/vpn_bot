@@ -7,5 +7,5 @@ export default (expireAt: Date) => {
     const days = Math.floor(diffMs / MS_IN_DAY)
     const hours = Math.floor((diffMs % MS_IN_DAY) / MS_IN_HOUR)
 
-    return `${days} дн\\. ${hours} ч\\.`
+    return `${days} дн. ${hours} ч.`
 }

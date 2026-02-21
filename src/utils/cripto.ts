@@ -10,7 +10,16 @@ export async function validateWebhookHcmc(
     const signatureHeader = req.headers.get("x-remnawave-signature") ?? ""
     if (!signatureHeader || !secret) return false
 
-    const payload = await req.json()
+    const rawBody = await req.text()
+    if (!rawBody.trim()) return false
+
+    let payload: unknown
+    try {
+        payload = JSON.parse(rawBody)
+    } catch (error) {
+        console.error("[webhook] invalid json payload", error)
+        return false
+    }
 
     const hasher = new Bun.CryptoHasher("sha256", secret);
     hasher.update(JSON.stringify(payload));

@@ -6,7 +6,10 @@ interface IParams extends ICTX<'pre_checkout_query'> {
 }
 
 export default async ({ update }: IParams) => {
-
-    console.log("invoice_payload", JSON.parse(update.invoice_payload))
+    try {
+        console.log("invoice_payload", JSON.parse(update.invoice_payload))
+    } catch (error) {
+        console.error("Failed to parse pre_checkout invoice_payload:", update.invoice_payload, error)
+    }
     await executeMethod('answer_pre_checkout_query', { ok: true, pre_checkout_query_id: update.id })
 }

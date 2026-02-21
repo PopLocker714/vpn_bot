@@ -4,6 +4,7 @@ import type { ICTX } from "@/types";
 import executeMethod from "@utils/executeMethod";
 import type { Api } from "@effect-ak/tg-bot-api";
 import { remnawaveService } from "@lib/remnawave";
+import { mdv2 } from "@utils/telegramMarkdown";
 
 interface IParams extends ICTX<'callback_query' | 'message'> { }
 
@@ -15,15 +16,15 @@ export default async ({ update, data }: IParams) => {
 
     const sendMessageConfig: Parameters<Api['send_message']>[0] = {
         chat_id,
-        text: `
+        text: mdv2`
 1️⃣ Выбери необходимый тариф ниже👇
 2️⃣ Внеси платеж
 3️⃣ И получи ссылку с простой инструкцией😉
 
-⏰ Если подписка активна, оплаченное время добавится к текущей подписке\\.
+⏰ Если подписка активна, оплаченное время добавится к текущей подписке.
 Посмотреть оставшееся время подписки можно во вкладке 🔐 Моя подписка
 
-${isFreeAvalabel ? `🎁 Всем новым пользователям бесплатный пробный период\\!` : ""}
+${isFreeAvalabel ? "🎁 Всем новым пользователям бесплатный пробный период!" : ""}
 `,
         parse_mode: 'MarkdownV2',
         reply_markup: {

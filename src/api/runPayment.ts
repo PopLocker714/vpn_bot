@@ -4,6 +4,7 @@ import { MESSAGE_EFFECTS } from "@effect-ak/tg-bot-client"
 import { remnawaveService } from "@lib/remnawave"
 import executeMethod from "@utils/executeMethod"
 import getNewExpireAt from "@utils/getNewExpireAt"
+import { mdv2 } from "@utils/telegramMarkdown"
 
 interface IParams extends ICTX<'callback_query'> {
     data: ICallbackDataSubscribe
@@ -28,7 +29,8 @@ export default async ({ update, data }: IParams) => {
         if (user.tag === 'FREE_USED') {
             await executeMethod('send_message', {
                 chat_id: update.from.id,
-                text: "Вы уже воспользовались пробным периодом",
+                text: mdv2`Вы уже воспользовались пробным периодом`,
+                parse_mode: 'MarkdownV2',
                 reply_markup: {
                     inline_keyboard: [
                         [backButtonMenu]
@@ -62,8 +64,8 @@ PAYLOAD: ${JSON.stringify(data, null, 2)}
         if ('uuid' in resUpdatedUser) {
             await executeMethod('send_message', {
                 chat_id: update.from.id,
-                text: `
-🎉 Пробный период акитвирован на ${data.days} дней\\!
+                text: mdv2`
+🎉 Пробный период акитвирован на ${data.days} дней!
 Ниже будет ссылка на инструкцию для подключения
 Если не получается подключться обратитесь в поддержку
 Приятного пользования 😉

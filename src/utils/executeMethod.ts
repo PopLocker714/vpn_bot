@@ -57,7 +57,21 @@ export default async <M extends keyof Api>(
         body: usePost ? body : undefined,
     });
 
-    const data = await res.json() as TgBotApiResponseSchema;
+    const rawBody = await res.text();
+    let data: TgBotApiResponseSchema;
+    try {
+        data = JSON.parse(rawBody) as TgBotApiResponseSchema;
+    } catch (error) {
+        console.error("❌ Telegram API JSON parse error:", {
+            method,
+            status: res.status,
+            statusText: res.statusText,
+            contentType: res.headers.get("content-type"),
+            rawBodySample: rawBody.slice(0, 500),
+            error,
+        });
+        throw error;
+    }
 
     const isResponse = isTgBotApiResponse(data)
     if (!isResponse) {
