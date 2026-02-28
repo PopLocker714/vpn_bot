@@ -1,6 +1,6 @@
 import { GetUserByUuidCommand } from "@remnawave/backend-contract";
+import { getUserCache, setUserCache } from "@utils/cache/user.cache";
 import getRemnawaveInstance from "@utils/getRemnawaveInstance";
-import { setUserCache, getUserCache } from "@utils/cache/user.cache";
 
 export default async (uuid: string, getCache: boolean = false) => {
     const url = GetUserByUuidCommand.url(uuid.toString());

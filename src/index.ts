@@ -5,7 +5,7 @@ import { serve } from "bun";
 import preCheckout from "./api/preCheckout";
 import referal from "./api/referal";
 import runPayment from "./api/runPayment";
-import startCmd from "./api/start";
+import startCmd from "./api/start/start";
 import subscribe from "./api/subscribe";
 import subscription from "./api/subscription";
 import successfulPayment from "./api/successfulPayment";

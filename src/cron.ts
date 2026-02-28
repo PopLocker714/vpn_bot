@@ -1,6 +1,6 @@
+import { lte, sql } from "drizzle-orm";
 import sqlmem from "./db/sqliteMemory";
 import { $Users_c } from "./db/sqliteMemory/schemas/users.schema";
-import { lte, sql } from "drizzle-orm";
 
 export const startCacheGC = () => {
     setInterval(async () => {

@@ -1,4 +1,4 @@
-import { CreateUserCommand } from "@remnawave/backend-contract";
+import type { CreateUserCommand } from "@remnawave/backend-contract";
 import { sql } from "drizzle-orm";
 import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
 

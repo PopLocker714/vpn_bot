@@ -1,6 +1,6 @@
 import { CreateUserCommand } from "@remnawave/backend-contract";
-import getRemnawaveInstance from "@utils/getRemnawaveInstance";
 import { setUserCache } from "@utils/cache/user.cache";
+import getRemnawaveInstance from "@utils/getRemnawaveInstance";
 
 export default async ({
     tg_id,

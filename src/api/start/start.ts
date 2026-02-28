@@ -5,25 +5,13 @@ import { remnawaveService } from "@lib/remnawave";
 import executeMethod from "@utils/executeMethod";
 import { parseUsername } from "@utils/parseUsername";
 import { mdv2 } from "@utils/telegramMarkdown";
+import { t } from "@utils/translateHelper";
 import { startButtons } from "@/buttons";
 import type { ICTX } from "@/types";
 
-const renderText = (userName: string) => mdv2`
-Привет *${userName}!*
-
-💻 Добро пожаловать в *CatFlyVPN!*
-
-Мы предоставляем доступ к VPN для обхода блокировок и обеспечения безопасности в интернете. Пользуясь нашим VPN, Вы получите доступ к *Instagram*, *YouTube*, *TikTok*, *Facebook*, *Twitter* и другим заблокированным сервисам.
-
-🚀 Никаких ограничений скорости — полная свобода в интернете на максимальной скорости.
-🌍 Доступ ко всем сайтам — никаких блокировок, где бы вы ни находились.
-⚙️ Быстрое подключение — легко настроить за 1 минуту на *iPhone*, *Android* и *Android TV*, ПК (*Windows*, *Linux*, *macOS*).
-💳 Оплата происходит через *YooMoney*, *СБП* и *Банковские карты*.
-`;
-
-const startMsgParams: Parameters<Api["send_message"]>[0] = {
+export const startMsgParams: Parameters<Api["send_message"]>[0] = {
     chat_id: 0,
-    text: mdv2`subs`,
+    text: mdv2``,
     parse_mode: "MarkdownV2",
     reply_markup: {
         inline_keyboard: startButtons,
@@ -102,7 +90,7 @@ export default async ({ update }: ICTX<"message" | "callback_query">) => {
         executeMethod("answer_callback_query", { callback_query_id: cb.id });
         await executeMethod("send_message", {
             ...startMsgParams,
-            text: renderText(cb.from.first_name),
+            text: t(cb.from.language_code, "start_welcome", cb.from.first_name),
         });
         return;
     }
@@ -111,7 +99,11 @@ export default async ({ update }: ICTX<"message" | "callback_query">) => {
 
     await executeMethod("send_message", {
         ...startMsgParams,
-        text: renderText(msg.chat.first_name || msg.chat.username || "Друг"),
+        text: t(
+            msg.from?.language_code,
+            "start_welcome",
+            msg.chat.first_name || msg.chat.username || "Друг",
+        ),
     });
 
     const refCode = msg.text?.replace("/start", "").replace("=", "");

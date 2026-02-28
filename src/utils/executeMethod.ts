@@ -1,10 +1,6 @@
 import type { Api } from "@effect-ak/tg-bot-api";
+import { isTgBotApiResponse, snakeToCamel } from "@effect-ak/tg-bot-client";
 import type { BodyInit, HeadersInit } from "bun";
-import {
-    isTgBotApiResponse,
-    snakeToCamel,
-    TgBotClientError,
-} from "@effect-ak/tg-bot-client";
 
 export interface ExitResultSuccess<M extends keyof Api> {
     ok: true;

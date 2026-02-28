@@ -1,11 +1,11 @@
 import type { ExtractedUpdate } from "@effect-ak/tg-bot";
-import { backButtonMenu, buttonsPlan, subscriptionButtons } from "@/buttons";
-import type { ICTX } from "@/types";
-import executeMethod from "@utils/executeMethod";
 import type { Api } from "@effect-ak/tg-bot-api";
 import { remnawaveService } from "@lib/remnawave";
+import executeMethod from "@utils/executeMethod";
 import getExpDate from "@utils/getExpDate";
 import { mdv2 } from "@utils/telegramMarkdown";
+import { backButtonMenu } from "@/buttons";
+import type { ICTX } from "@/types";
 
 interface IParams extends ICTX<"callback_query" | "message"> {}
 

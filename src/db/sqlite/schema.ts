@@ -1,5 +1,5 @@
-import * as transactionSchema from "./schemas/transaction.schema";
 import * as referalSchema from "./schemas/referal.schema";
+import * as transactionSchema from "./schemas/transaction.schema";
 
 export const schema = {
     ...transactionSchema,

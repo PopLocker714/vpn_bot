@@ -1,5 +1,5 @@
-import type { ICTX } from "@/types";
 import executeMethod from "@utils/executeMethod";
+import type { ICTX } from "@/types";
 
 interface IParams extends ICTX<"pre_checkout_query"> {
     // data: ICallbackDataSubscribe

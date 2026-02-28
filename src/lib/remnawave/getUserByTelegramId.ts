@@ -1,6 +1,6 @@
 import { GetUserByTelegramIdCommand } from "@remnawave/backend-contract";
+import { getUserCache, setUserCache } from "@utils/cache/user.cache";
 import getRemnawaveInstance from "@utils/getRemnawaveInstance";
-import { setUserCache, getUserCache } from "@utils/cache/user.cache";
 
 export default async (tg_id: number, getCache: boolean = false) => {
     const url = GetUserByTelegramIdCommand.url(tg_id.toString());

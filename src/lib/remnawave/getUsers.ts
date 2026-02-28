@@ -1,6 +1,5 @@
 import { GetAllUsersCommand } from "@remnawave/backend-contract";
 import getRemnawaveInstance from "@utils/getRemnawaveInstance";
-import { setUserCache, getUserCache } from "@utils/cache/user.cache";
 
 export default async () => {
     const url = GetAllUsersCommand.url;
@@ -10,7 +9,7 @@ export default async () => {
             method,
         });
 
-    let res = await reqest();
+    const res = await reqest();
 
     if ("response" in res) {
         const users = res.response.users;
