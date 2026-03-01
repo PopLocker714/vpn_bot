@@ -39,7 +39,7 @@ const referalButton: InlineKeyboardButton = {
 };
 
 const promocodeButton: InlineKeyboardButton = {
-    text: "⭐ Ввести промокод",
+    text: "🎁 Ввести промокод",
     callback_data: JSON.stringify({
         command: "/promocode",
         type: "cmd",
@@ -49,5 +49,5 @@ const promocodeButton: InlineKeyboardButton = {
 export const startButtons: InlineKeyboardButton[][] = [
     [connectButton],
     [mySubscribe, helpButton],
-    [referalButton, promocodeButton],
+    [referalButton],
 ];
