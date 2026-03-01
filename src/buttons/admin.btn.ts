@@ -41,14 +41,6 @@ const adminCodeDeleteBtn: InlineKeyboardButton = {
     } as ICallbackDataCmd),
 };
 
-export const adminCodeCancelCreateBtn: InlineKeyboardButton = {
-    text: "Отмена",
-    callback_data: JSON.stringify({
-        command: "/admin/codes/cancel",
-        type: "cmd",
-    } as ICallbackDataCmd),
-};
-
 export const adminCodeBtns = [
     adminCodeCreateBtn,
     adminCodeUpdateBtn,

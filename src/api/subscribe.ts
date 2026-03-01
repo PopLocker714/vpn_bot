@@ -3,7 +3,7 @@ import type { Api } from "@effect-ak/tg-bot-api";
 import { remnawaveService } from "@lib/remnawave";
 import executeMethod from "@utils/executeMethod";
 import { mdv2 } from "@utils/telegramMarkdown";
-import { buttonsPlan, subscriptionButtons } from "@/buttons/buttons";
+import { buttonsPlan, subscriptionButtons } from "@/buttons/subscribe.btn";
 import type { ICTX } from "@/types";
 
 interface IParams extends ICTX<"callback_query" | "message"> {}

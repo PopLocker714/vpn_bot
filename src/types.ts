@@ -27,6 +27,8 @@ export interface ICallbackDataCmd {
         | "/subscription"
         | "/help"
         | "/referal"
+        | "/promocode"
+        | "/cancel"
         | IAdminCommands;
 }
 

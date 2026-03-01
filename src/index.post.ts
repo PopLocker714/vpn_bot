@@ -9,7 +9,10 @@ import promocodeCancel from "./api/admin/promocode/promocode.cancel";
 import promocodeCreate from "./api/admin/promocode/promocode.create";
 import promocodeCreateInput from "./api/admin/promocode/promocode.create.input";
 import promocodeMenu from "./api/admin/promocode/promocode.menu";
+import cancelState from "./api/cancel.state";
 import preCheckout from "./api/preCheckout";
+import promocodeInput from "./api/promocode/promocode.input";
+import promocodeValidate from "./api/promocode/promocode.validate";
 import referal from "./api/referal";
 import runPayment from "./api/runPayment";
 import startCmd from "./api/start/start";
@@ -71,6 +74,7 @@ const runCmd = async (
     cmd: ICallbackDataCmd["command"],
     update: ExtractedUpdate<"message" | "callback_query">,
 ) => {
+    console.log(cmd);
     switch (cmd) {
         case "/start":
             await startCmd({ update });
@@ -83,6 +87,12 @@ const runCmd = async (
             break;
         case "/referal":
             await referal({ update });
+            break;
+        case "/promocode":
+            await promocodeInput({ update });
+            break;
+        case "/cancel":
+            await cancelState({ update });
             break;
         case "/admin":
             await adminMenu({ update });
@@ -171,6 +181,9 @@ const index = async (request: Bun.BunRequest<"/tg_webhook/secret_string">) => {
                         break;
                     case "input_create_code":
                         await promocodeCreateInput({ update: msg });
+                        break;
+                    case "input_promocode":
+                        await promocodeValidate({ update: msg });
                         break;
                 }
                 break;

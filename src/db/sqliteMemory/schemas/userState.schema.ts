@@ -8,7 +8,11 @@ export type UserState = {
     };
 }[keyof UserStatePayloadMap];
 
-export const userStateEnum = ["idle", "input_create_code"] as const;
+export const userStateEnum = [
+    "idle",
+    "input_create_code",
+    "input_promocode",
+] as const;
 
 export type EUserStateType = (typeof userStateEnum)[number];
 
@@ -19,6 +23,7 @@ export type UserStatePayloadMap = {
         expDays: number | null;
         userCount: number | null;
     };
+    input_promocode: null;
 };
 
 const TTL = 15 * 60 * 1000; // 15 минут

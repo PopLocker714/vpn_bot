@@ -2,7 +2,7 @@ import type { ExtractedUpdate } from "@effect-ak/tg-bot";
 import { userStateService } from "@lib/userState.methods";
 import executeMethod from "@utils/executeMethod";
 import { mdv2 } from "@utils/telegramMarkdown";
-import { adminCodeCancelCreateBtn } from "@/buttons/admin.btn";
+import { cancelAdminBtn } from "@/buttons/promocode.btn";
 import env from "@/config/env";
 import type { ICTX } from "@/types";
 import promocodeMenu from "./promocode.menu";
@@ -33,7 +33,7 @@ export default async ({ update }: ICTX<"message" | "callback_query">) => {
                 text: mdv2` Неверный код введите снова (обшьше 2 символов)`,
                 parse_mode: "MarkdownV2",
                 reply_markup: {
-                    inline_keyboard: [[adminCodeCancelCreateBtn]],
+                    inline_keyboard: [[cancelAdminBtn]],
                 },
             });
             return;
@@ -51,7 +51,7 @@ export default async ({ update }: ICTX<"message" | "callback_query">) => {
 Введите количество дней для даты ичтечения срока промокода`,
             parse_mode: "MarkdownV2",
             reply_markup: {
-                inline_keyboard: [[adminCodeCancelCreateBtn]],
+                inline_keyboard: [[cancelAdminBtn]],
             },
         });
 
@@ -69,7 +69,7 @@ export default async ({ update }: ICTX<"message" | "callback_query">) => {
                 text: mdv2`Неверное колличество дней! введите снова`,
                 parse_mode: "MarkdownV2",
                 reply_markup: {
-                    inline_keyboard: [[adminCodeCancelCreateBtn]],
+                    inline_keyboard: [[cancelAdminBtn]],
                 },
             });
             return;
@@ -89,7 +89,7 @@ export default async ({ update }: ICTX<"message" | "callback_query">) => {
 Введите максимальное количество пользователей для использования промокода`,
             parse_mode: "MarkdownV2",
             reply_markup: {
-                inline_keyboard: [[adminCodeCancelCreateBtn]],
+                inline_keyboard: [[cancelAdminBtn]],
             },
         });
 
@@ -107,7 +107,7 @@ export default async ({ update }: ICTX<"message" | "callback_query">) => {
                 text: mdv2`Неверное колличество пользователей! введите снова`,
                 parse_mode: "MarkdownV2",
                 reply_markup: {
-                    inline_keyboard: [[adminCodeCancelCreateBtn]],
+                    inline_keyboard: [[cancelAdminBtn]],
                 },
             });
             return;

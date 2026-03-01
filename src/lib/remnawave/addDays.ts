@@ -19,7 +19,5 @@ export const addDays = async (user_id: string, days: number) => {
             uuid: user.uuid,
             activeInternalSquads: squadsUuids,
         });
-
-        console.log("(addDays) updated user ", updatedUser);
     }
 };

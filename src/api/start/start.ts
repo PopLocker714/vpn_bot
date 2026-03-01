@@ -6,7 +6,7 @@ import executeMethod from "@utils/executeMethod";
 import { parseUsername } from "@utils/parseUsername";
 import { mdv2 } from "@utils/telegramMarkdown";
 import { t } from "@utils/translateHelper";
-import { startButtons } from "@/buttons/buttons";
+import { startButtons } from "@/buttons/start.btn";
 import type { ICTX } from "@/types";
 
 export const startMsgParams: Parameters<Api["send_message"]>[0] = {
@@ -106,7 +106,9 @@ export default async ({ update }: ICTX<"message" | "callback_query">) => {
         ),
     });
 
-    const refCode = msg.text?.replace("/start", "").replace("=", "");
+    const refCode = msg.text?.startsWith("/start")
+        ? msg.text?.replace("/start", "").replace("=", "")
+        : undefined;
 
     if (refCode) {
         const referal_by = referalService.verifyRefCode(refCode);
@@ -148,10 +150,20 @@ export default async ({ update }: ICTX<"message" | "callback_query">) => {
                 return;
             }
 
+            // если я сам на свой реф пытаюсь применить
+            if (refMe.user_id === refBy.user_id) {
+                await executeMethod("send_message", {
+                    ...defaulParams,
+                    text: mdv2`Вы не можете использовать свой же реферальный код!`,
+                });
+                return;
+            }
+
+            // если я пытаюсь применить реф уже пригласившего меня друга
             if (refMe.user_id === refBy.referal_by) {
                 await executeMethod("send_message", {
                     ...defaulParams,
-                    text: mdv2`Реферальный код не может быть активирован!`,
+                    text: mdv2`Реферальный код не может быть активирован другом которого вы приглашали!`,
                 });
                 return;
             }

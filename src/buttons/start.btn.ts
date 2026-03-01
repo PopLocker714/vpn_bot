@@ -1,28 +1,5 @@
 import type { InlineKeyboardButton } from "@effect-ak/tg-bot-api";
-import type { ICallbackDataCmd, ICallbackDataSubscribe } from "@/types";
-
-export const buttonsPlan: InlineKeyboardButton[][] = [
-    [
-        {
-            text: "Подписка на 30д (250₽)",
-            pay: true,
-            callback_data: JSON.stringify({
-                type: "subscribe",
-                price: 25000,
-                days: 30,
-            } as ICallbackDataSubscribe),
-        },
-    ],
-];
-
-export const freeButtonPlan: InlineKeyboardButton = {
-    text: "🎁 Пробный период 3 дня 🎁",
-    callback_data: JSON.stringify({
-        type: "subscribe",
-        price: 0,
-        days: 3,
-    } as ICallbackDataSubscribe),
-};
+import type { ICallbackDataCmd } from "@/types";
 
 export const backButtonMenu: InlineKeyboardButton = {
     text: "☰ меню",
@@ -33,7 +10,7 @@ export const backButtonMenu: InlineKeyboardButton = {
 };
 
 export const connectButton: InlineKeyboardButton = {
-    text: "👉 Подключиться/Продлить",
+    text: "👉 Подключиться & Продлить",
     callback_data: JSON.stringify({
         type: "cmd",
         command: "/subscribe",
@@ -61,10 +38,16 @@ const referalButton: InlineKeyboardButton = {
     } as ICallbackDataCmd),
 };
 
+const promocodeButton: InlineKeyboardButton = {
+    text: "⭐ Ввести промокод",
+    callback_data: JSON.stringify({
+        command: "/promocode",
+        type: "cmd",
+    } as ICallbackDataCmd),
+};
+
 export const startButtons: InlineKeyboardButton[][] = [
     [connectButton],
     [mySubscribe, helpButton],
-    [referalButton],
+    [referalButton, promocodeButton],
 ];
-
-export const subscriptionButtons = [[freeButtonPlan], ...buttonsPlan];

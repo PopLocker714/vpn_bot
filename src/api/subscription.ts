@@ -4,7 +4,7 @@ import { remnawaveService } from "@lib/remnawave";
 import executeMethod from "@utils/executeMethod";
 import getExpDate from "@utils/getExpDate";
 import { mdv2 } from "@utils/telegramMarkdown";
-import { backButtonMenu } from "@/buttons/buttons";
+import { backButtonMenu } from "@/buttons/start.btn";
 import env from "@/config/env";
 import type { ICTX } from "@/types";
 

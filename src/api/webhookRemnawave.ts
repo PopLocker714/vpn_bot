@@ -2,7 +2,8 @@ import type { TRemnawaveWebhookUserEvent } from "@remnawave/backend-contract";
 import { validateWebhookHcmc } from "@utils/cripto";
 import executeMethod from "@utils/executeMethod";
 import { mdv2 } from "@utils/telegramMarkdown";
-import { backButtonMenu, buttonsPlan } from "@/buttons/buttons";
+import { backButtonMenu } from "@/buttons/start.btn";
+import { buttonsPlan } from "@/buttons/subscribe.btn";
 import env from "@/config/env";
 
 export default async (req: Bun.BunRequest<"/webhook/remnawave">) => {
