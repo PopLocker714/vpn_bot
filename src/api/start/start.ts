@@ -6,7 +6,7 @@ import executeMethod from "@utils/executeMethod";
 import { parseUsername } from "@utils/parseUsername";
 import { mdv2 } from "@utils/telegramMarkdown";
 import { t } from "@utils/translateHelper";
-import { startButtons } from "@/buttons";
+import { startButtons } from "@/buttons/buttons";
 import type { ICTX } from "@/types";
 
 export const startMsgParams: Parameters<Api["send_message"]>[0] = {

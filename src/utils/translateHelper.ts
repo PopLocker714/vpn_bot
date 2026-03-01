@@ -1,6 +1,6 @@
 // import rawEn from "@/../locales/en/translation.json";
 import { en as enRaw } from "@/../locales/en.ts";
-import { ru as ruRaw } from "@/../locales/ru.ts";
+import { type ru, ru as ruRaw } from "@/../locales/ru.ts";
 
 export const SUPPORTED_LANGS = ["ru", "en"] as const;
 export type SupportedLang = (typeof SUPPORTED_LANGS)[number];
@@ -30,11 +30,12 @@ export const t = <K extends keyof typeof ruRaw>(
     // @ts-expect-error TS знает параметры через Parameters<>
     return translations[safeLang][key](...args);
 };
+
 export const tRaw = <K extends keyof typeof ru>(
     lang: SupportedLang | undefined,
     key: K,
     ...args: Parameters<(typeof ru)[K]>
 ): string => {
     const safeLang = lang ?? "ru";
-    return translations[safeLang][key](...args); // уже с * и _
+    return translations[safeLang][key](...args);
 };

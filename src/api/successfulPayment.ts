@@ -4,7 +4,7 @@ import { remnawaveService } from "@lib/remnawave";
 import executeMethod from "@utils/executeMethod";
 import getNewExpireAt from "@utils/getNewExpireAt";
 import { mdv2 } from "@utils/telegramMarkdown";
-import { backButtonMenu } from "@/buttons";
+import { backButtonMenu } from "@/buttons/buttons";
 import env from "@/config/env";
 import sqldb from "@/db/sqlite";
 import { $Transactions } from "@/db/sqlite/schemas/transaction.schema";

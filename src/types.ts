@@ -11,9 +11,23 @@ export interface ICallbackDataSubscribe {
     days: number;
 }
 
+type IAdminCommands =
+    | "/admin"
+    | "/admin/codes"
+    | "/admin/codes/create"
+    | "/admin/codes/update"
+    | "/admin/codes/delete"
+    | "/admin/codes/cancel";
+
 export interface ICallbackDataCmd {
     type: "cmd";
-    command: "/start" | "/subscribe" | "/subscription" | "/help" | "/referal";
+    command:
+        | "/start"
+        | "/subscribe"
+        | "/subscription"
+        | "/help"
+        | "/referal"
+        | IAdminCommands;
 }
 
 export type ICallbackTypes = ICallbackDataCmd | ICallbackDataSubscribe;

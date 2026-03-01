@@ -1,8 +1,14 @@
 import { type ExtractedUpdate, extractUpdate } from "@effect-ak/tg-bot";
 import type { Update } from "@effect-ak/tg-bot-api";
+import { userStateService } from "@lib/userState.methods";
 import executeMethod from "@utils/executeMethod";
 import { extractCommand } from "@utils/extractCommand";
 import { mdv2 } from "@utils/telegramMarkdown";
+import adminMenu from "./api/admin/admin.menu";
+import promocodeCancel from "./api/admin/promocode/promocode.cancel";
+import promocodeCreate from "./api/admin/promocode/promocode.create";
+import promocodeCreateInput from "./api/admin/promocode/promocode.create.input";
+import promocodeMenu from "./api/admin/promocode/promocode.menu";
 import preCheckout from "./api/preCheckout";
 import referal from "./api/referal";
 import runPayment from "./api/runPayment";
@@ -62,7 +68,7 @@ const notifyUserError = async (
 };
 
 const runCmd = async (
-    cmd: ICallbackDataCmd["command"] | string,
+    cmd: ICallbackDataCmd["command"],
     update: ExtractedUpdate<"message" | "callback_query">,
 ) => {
     switch (cmd) {
@@ -77,6 +83,24 @@ const runCmd = async (
             break;
         case "/referal":
             await referal({ update });
+            break;
+        case "/admin":
+            await adminMenu({ update });
+            break;
+        case "/admin/codes":
+            await promocodeMenu({ update });
+            break;
+        case "/admin/codes/create":
+            await promocodeCreate({ update });
+            break;
+        case "/admin/codes/update":
+            // await promocodeUpdate({ update });
+            break;
+        case "/admin/codes/delete":
+            // await promocodeDelete({ update });
+            break;
+        case "/admin/codes/cancel":
+            await promocodeCancel({ update });
             break;
     }
 };
@@ -131,11 +155,23 @@ const index = async (request: Bun.BunRequest<"/tg_webhook/secret_string">) => {
         switch (update.type) {
             case "message": {
                 const msg = update as ExtractedUpdate<"message">;
-                if (cmd) {
-                    await runCmd(cmd, msg);
-                }
-                if (msg.successful_payment) {
-                    await successfulPayment({ update: msg });
+                const state = await userStateService.getState(msg.chat.id);
+
+                switch (state.type) {
+                    case "idle":
+                        if (cmd) {
+                            await runCmd(
+                                cmd as ICallbackDataCmd["command"],
+                                msg,
+                            );
+                        }
+                        if (msg.successful_payment) {
+                            await successfulPayment({ update: msg });
+                        }
+                        break;
+                    case "input_create_code":
+                        await promocodeCreateInput({ update: msg });
+                        break;
                 }
                 break;
             }
@@ -151,13 +187,9 @@ const index = async (request: Bun.BunRequest<"/tg_webhook/secret_string">) => {
                             cb.data,
                             error,
                         );
-                        await notifyUserError(
-                            cb as SupportedUpdate,
-                            "Некорректные данные кнопки. Нажмите /start и попробуйте снова.",
+                        throw new Error(
+                            "Failed to parse callback_query data JSON",
                         );
-                        return new Response("Invalid callback data", {
-                            status: 400,
-                        });
                     }
                     if (data.type === "cmd") {
                         await runCmd(data.command, cb);
