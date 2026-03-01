@@ -101,7 +101,7 @@ export default async ({ update }: ICTX<"message" | "callback_query">) => {
         if (msg.text === undefined) return;
         const userCount = Number(msg.text.trim());
 
-        if (userCount <= 0) {
+        if (userCount <= 0 || Number.isNaN(userCount)) {
             await executeMethod("send_message", {
                 chat_id,
                 text: mdv2`Неверное колличество пользователей! введите снова`,
