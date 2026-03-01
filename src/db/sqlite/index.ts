@@ -1,10 +1,11 @@
 import { Database } from "bun:sqlite";
 import { drizzle } from "drizzle-orm/bun-sqlite";
 import { migrate } from "drizzle-orm/bun-sqlite/migrator";
+import env from "@/config/env";
 import { schema } from "@/db/sqlite/schema";
 
 export const createDb = () => {
-    const sqlite = new Database(`${Bun.env.DB_URL}`, { create: true });
+    const sqlite = new Database(`${env.DB_URL}`, { create: true });
 
     sqlite.run("PRAGMA journal_mode = WAL;");
 

@@ -1,6 +1,7 @@
 import type { Api } from "@effect-ak/tg-bot-api";
 import { isTgBotApiResponse, snakeToCamel } from "@effect-ak/tg-bot-client";
 import type { BodyInit, HeadersInit } from "bun";
+import env from "@/config/env";
 
 export interface ExitResultSuccess<M extends keyof Api> {
     ok: true;
@@ -23,7 +24,7 @@ export default async <M extends keyof Api>(
     input: Parameters<Api[M]>[0] = {} as any,
     options: RequestOptions = {},
 ) => {
-    const token = Bun.env.BOT_TOKEN;
+    const token = env.BOT_TOKEN;
     if (!token) throw new Error("❌ BOT_TOKEN не найден в окружении");
 
     const url = `https://api.telegram.org/bot${token}/${snakeToCamel(method)}`;

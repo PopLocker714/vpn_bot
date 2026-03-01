@@ -2,8 +2,9 @@ import { describe, expect, test } from "bun:test";
 import executeMethod from "@utils/executeMethod";
 import { SUPPORTED_LANGS, t } from "@utils/translateHelper";
 import { startMsgParams } from "@/api/start/start";
+import env from "@/config/env";
 
-const chat_id = Number(Bun.env.BOT_ADMIN_ID);
+const chat_id = env.BOT_ADMIN_ID;
 
 describe("START MESSAGES", async () => {
     for (const lang of SUPPORTED_LANGS) {

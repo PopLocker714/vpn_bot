@@ -5,6 +5,7 @@ import executeMethod from "@utils/executeMethod";
 import getNewExpireAt from "@utils/getNewExpireAt";
 import { mdv2 } from "@utils/telegramMarkdown";
 import { backButtonMenu } from "@/buttons";
+import env from "@/config/env";
 import sqldb from "@/db/sqlite";
 import { $Transactions } from "@/db/sqlite/schemas/transaction.schema";
 import type { ICallbackDataSubscribe, ICTX } from "@/types";
@@ -150,7 +151,7 @@ PAYLOAD: ${JSON.stringify(payload, null, 2)}
                         [
                             {
                                 text: "Подключиться",
-                                url: `${Bun.env.REMNAWAVE_WEB}/${resUpdatedUser.shortUuid}`,
+                                url: `${env.REMNAWAVE_WEB}/${resUpdatedUser.shortUuid}`,
                             },
                         ],
                         [backButtonMenu],

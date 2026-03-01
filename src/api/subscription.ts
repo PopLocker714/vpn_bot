@@ -5,6 +5,7 @@ import executeMethod from "@utils/executeMethod";
 import getExpDate from "@utils/getExpDate";
 import { mdv2 } from "@utils/telegramMarkdown";
 import { backButtonMenu } from "@/buttons";
+import env from "@/config/env";
 import type { ICTX } from "@/types";
 
 interface IParams extends ICTX<"callback_query" | "message"> {}
@@ -26,7 +27,7 @@ export default async ({ update, data }: IParams) => {
                 [
                     {
                         text: "Инструция для подключения",
-                        url: `${Bun.env.REMNAWAVE_WEB}/${user.shortUuid}`,
+                        url: `${env.REMNAWAVE_WEB}/${user.shortUuid}`,
                     },
                 ],
                 [backButtonMenu],

@@ -25,8 +25,5 @@ export async function validateWebhookHcmc(
     hasher.update(JSON.stringify(payload));
     const signature = hasher.digest("hex");
 
-    console.log("v2", signature);
-    console.log("v2", signatureHeader);
-
     return signature === signatureHeader;
 }

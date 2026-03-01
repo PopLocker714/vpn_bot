@@ -3,6 +3,7 @@ import { referalService } from "@lib/referal.methods";
 import { remnawaveService } from "@lib/remnawave";
 import executeMethod from "@utils/executeMethod";
 import { mdv2 } from "@utils/telegramMarkdown";
+import env from "@/config/env";
 import type { ICTX } from "@/types";
 
 export default async ({ update }: ICTX<"message" | "callback_query">) => {
@@ -35,7 +36,7 @@ export default async ({ update }: ICTX<"message" | "callback_query">) => {
         executeMethod("answer_callback_query", { callback_query_id: cb.id });
     }
 
-    const link = `https://t.me/${Bun.env.BOT_NAME}?start=${referalService.generateRefCode(existUser.uuid)}`;
+    const link = `https://t.me/${env.BOT_NAME}?start=${referalService.generateRefCode(existUser.uuid)}`;
 
     await executeMethod("send_message", {
         chat_id,

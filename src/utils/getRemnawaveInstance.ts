@@ -1,10 +1,12 @@
+import env from "@/config/env";
+
 export default async <R>(url: string, opt: BunFetchRequestInit) => {
-    const fullUrl = `${Bun.env.REMNAWAVE_PANEL_URL}/${url}`;
+    const fullUrl = `${env.REMNAWAVE_PANEL_URL}/${url}`;
     try {
         const res = await fetch(fullUrl, {
             ...opt,
             headers: {
-                Authorization: `Bearer ${Bun.env.REMNAWAVE_API_TOKEN}`,
+                Authorization: `Bearer ${env.REMNAWAVE_API_TOKEN}`,
                 "Content-Type": "application/json",
             },
         });

@@ -30,6 +30,8 @@
         "@effect-ak/tg-bot": "^1.2.0",
         "@effect-ak/tg-bot-client": "^1.3.0",
         "@remnawave/backend-contract": "^2.5.6",
+        "arkenv": "^0.11.0",
+        "arktype": "^2.1.29",
         "drizzle-orm": "^0.45.1"
     }
 }

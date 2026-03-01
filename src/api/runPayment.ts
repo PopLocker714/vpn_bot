@@ -4,6 +4,7 @@ import executeMethod from "@utils/executeMethod";
 import getNewExpireAt from "@utils/getNewExpireAt";
 import { mdv2 } from "@utils/telegramMarkdown";
 import { backButtonMenu } from "@/buttons";
+import env from "@/config/env";
 import type { ICallbackDataSubscribe, ICTX } from "@/types";
 
 interface IParams extends ICTX<"callback_query"> {
@@ -78,7 +79,7 @@ PAYLOAD: ${JSON.stringify(data, null, 2)}
                         [
                             {
                                 text: "Подключиться",
-                                url: `${Bun.env.REMNAWAVE_WEB}/${resUpdatedUser.shortUuid}`,
+                                url: `${env.REMNAWAVE_WEB}/${resUpdatedUser.shortUuid}`,
                             },
                         ],
                         [backButtonMenu],
@@ -101,7 +102,7 @@ PAYLOAD: ${JSON.stringify(data, null, 2)}
             },
         ],
         title: "Ежемесячная подписка",
-        provider_token: Bun.env.YKASSA_PROVIDER_TOKEN!,
+        provider_token: env.YKASSA_PROVIDER_TOKEN,
         start_parameter: "test",
     });
 };

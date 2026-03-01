@@ -2,7 +2,7 @@ import { lte, sql } from "drizzle-orm";
 import sqlmem from "./db/sqliteMemory";
 import { $Users_c } from "./db/sqliteMemory/schemas/users.schema";
 
-export const startCacheGC = () => {
+export const starcCron = () => {
     setInterval(async () => {
         await sqlmem
             .delete($Users_c)

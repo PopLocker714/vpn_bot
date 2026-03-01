@@ -1,4 +1,5 @@
 import { eq } from "drizzle-orm";
+import env from "@/config/env";
 import sqldb from "@/db/sqlite";
 import { $Referal, type TIReferal } from "@/db/sqlite/schemas/referal.schema";
 
@@ -66,7 +67,7 @@ const sign = (data: Bun.BlobOrStringOrBuffer, secret: string) => {
 };
 
 const generateRefCode = (userId: string) => {
-    const sig = sign(userId, Bun.env.REF_SECRET!);
+    const sig = sign(userId, env.REF_SECRET);
     return Buffer.from(`${userId}.${sig}`).toString("base64url");
 };
 
@@ -75,7 +76,7 @@ export const verifyRefCode = (code: string) => {
         const raw = Buffer.from(code, "base64url").toString();
         const [userId, sig] = raw.split(".");
         if (!userId || !sig) return null;
-        const expected = sign(userId, Bun.env.REF_SECRET!);
+        const expected = sign(userId, env.REF_SECRET);
         if (sig !== expected) return null;
         return userId;
     } catch {

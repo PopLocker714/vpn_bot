@@ -3,9 +3,10 @@ import { validateWebhookHcmc } from "@utils/cripto";
 import executeMethod from "@utils/executeMethod";
 import { mdv2 } from "@utils/telegramMarkdown";
 import { backButtonMenu, buttonsPlan } from "@/buttons";
+import env from "@/config/env";
 
 export default async (req: Bun.BunRequest<"/webhook/remnawave">) => {
-    const secret = Bun.env.WEBHOOK_SECRET_HEADER;
+    const secret = env.WEBHOOK_SECRET_HEADER;
     const clone = req.clone();
     const isValid = await validateWebhookHcmc(clone, secret);
 
@@ -46,6 +47,10 @@ _* При покупке дни сумируются_`,
                 inline_keyboard: [...buttonsPlan, [backButtonMenu]],
             },
         });
+    }
+
+    if (event.event === "user.expired") {
+        // TODO
     }
 
     return new Response("ok");
